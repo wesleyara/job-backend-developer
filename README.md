@@ -46,7 +46,7 @@ Endpoint: '/movie-reviews'
 Método: 'GET'
 ```
 **Opcional**
-- Ter a capacidade de orderar por data de lançamento e avaliação, de maneira ascendente ou descendente.
+- Ter a capacidade de ordenar por data de lançamento e avaliação, de maneira ascendente ou descendente.
 - Capacidade de filtrar as suas anotações por título, atores ou diretores (caso preciso, incluir os demais campos no banco de dados).
 
 ---
