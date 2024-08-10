@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { EnvConfigModule } from './infra/env-config/env-config.module';
+import { InfraModule } from './infra/infra.module';
 
 @Module({
-  imports: [EnvConfigModule.forRoot()],
+  imports: [InfraModule],
   controllers: [],
   providers: [],
 })
