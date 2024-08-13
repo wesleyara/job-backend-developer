@@ -9,7 +9,7 @@ export class EnvConfigModule extends ConfigModule {
   static forRoot(options: ConfigModuleOptions = {}): DynamicModule {
     return super.forRoot({
       isGlobal: true,
-      envFilePath: [`.env.${process.env.NODE_ENV}`],
+      envFilePath: [`.env`],
       ...options,
     });
   }
