@@ -1,0 +1,38 @@
+GET http://localhost:3333/api/v1/review
+
+### 
+
+GET http://localhost:3333/api/v1/review?title=Assassins%20creed
+
+### 
+
+GET http://localhost:3333/api/v1/review?director=vi-dan
+
+### 
+
+GET http://localhost:3333/api/v1/review?actor=Paul%20Cless
+
+###
+
+POST http://localhost:3333/api/v1/review/create
+Content-Type: application/json
+
+{
+  "title": "Assassins creed",
+  "notes": "teste notes"
+}
+
+###
+
+PATCH http://localhost:3333/api/v1/review/update/2
+Content-Type: application/json
+
+{
+  "title": "Assassins creed",
+  "notes": "teste notes update"
+}
+
+###
+
+DELETE http://localhost:3333/api/v1/review/delete/2
+Content-Type: application/json
