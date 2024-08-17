@@ -8,10 +8,17 @@ import { HttpModule } from '@nestjs/axios';
 import { HttpClientService } from 'src/infra/http/http.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Review } from './entities/review.entity';
+import { CacheService } from 'src/infra/cache/cache.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Review]), ClientModule, HttpModule],
-  providers: [ReviewService, OmdbService, HttpClientService, ReviewRepository],
+  providers: [
+    ReviewService,
+    OmdbService,
+    HttpClientService,
+    ReviewRepository,
+    CacheService,
+  ],
   controllers: [ReviewController],
 })
 export class ReviewModule {}

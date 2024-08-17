@@ -12,3 +12,15 @@ services:
       MYSQL_HOST: ${DATABASE_HOST}
     ports:
       - "3306:3306"
+
+  redis:
+    image: redis:6-alpine
+    command: redis-server
+    container_name: review-redis
+    ports:
+      - '6379:6379'
+    networks:
+      - service-net
+
+networks:
+  service-net:

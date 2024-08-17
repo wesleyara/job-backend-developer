@@ -1,19 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  Inject,
+} from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { CacheService } from 'src/infra/cache/cache.service';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private readonly reviewService: ReviewService) {}
+  @Inject(ReviewService)
+  private readonly reviewService: ReviewService;
+  @Inject(CacheService)
+  private readonly cacheService: CacheService;
 
   @Get()
   @ApiQuery({ name: 'title', required: false })
   @ApiQuery({ name: 'actor', required: false })
   @ApiQuery({ name: 'director', required: false })
   @ApiTags('review')
-  findByFilter(@Query('title') title: string, @Query('actor') actor: string, @Query('director') director: string) {
+  async findByFilter(
+    @Query('title') title: string,
+    @Query('actor') actor: string,
+    @Query('director') director: string,
+  ) {
     if (title) {
       return this.reviewService.findByTitle(title);
     }
@@ -26,7 +44,19 @@ export class ReviewController {
       return this.reviewService.findByDirector(director);
     }
 
-    return this.reviewService.findAll();
+    const cacheKey = 'reviews';
+
+    const cachedReviews = await this.cacheService.get(cacheKey);
+
+    if (cachedReviews) {
+      return cachedReviews;
+    }
+
+    const reviews = await this.reviewService.findAll();
+
+    await this.cacheService.set(cacheKey, reviews, 60);
+
+    return reviews;
   }
 
   @Post('create')
