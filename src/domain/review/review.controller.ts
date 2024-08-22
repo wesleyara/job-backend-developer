@@ -26,22 +26,26 @@ export class ReviewController {
   @ApiQuery({ name: 'title', required: false })
   @ApiQuery({ name: 'actor', required: false })
   @ApiQuery({ name: 'director', required: false })
+  @ApiQuery({ name: 'sort', required: false })
+  @ApiQuery({ name: 'order', required: false })
   @ApiTags('review')
   async findByFilter(
     @Query('title') title: string,
     @Query('actor') actor: string,
     @Query('director') director: string,
+    @Query('sort') sort: string,
+    @Query('order') order: string,
   ) {
     if (title) {
-      return this.reviewService.findByTitle(title);
+      return this.reviewService.findByTitle(title, sort, order);
     }
 
     if (actor) {
-      return this.reviewService.findByActor(actor);
+      return this.reviewService.findByActor(actor, sort, order);
     }
 
     if (director) {
-      return this.reviewService.findByDirector(director);
+      return this.reviewService.findByDirector(director, sort, order);
     }
 
     const cacheKey = 'reviews';

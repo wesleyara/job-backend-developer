@@ -13,26 +13,75 @@ export class ReviewService {
   @Inject(OmdbService)
   private readonly omdbService: OmdbService;
 
-  async findAll() {
-    return this.reviewRepository.findMany();
+  async findAll(sort?: string, order?: string) {
+    const response = await this.reviewRepository.findMany();
+
+    if (sort && order) {
+      return response.sort((a, b) => {
+        if (order === 'asc') {
+          return a[sort] > b[sort] ? 1 : -1;
+        }
+
+        return a[sort] < b[sort] ? 1 : -1;
+      });
+    }
+
+    return response;
   }
 
-  async findByTitle(title: string) {
+  async findByTitle(title: string, sort?: string, order?: string) {
     const replacedTitle = title.replace(/%20/g, ' ');
 
-    return this.reviewRepository.findByTitle(replacedTitle);
+    const response = await this.reviewRepository.findByTitle(replacedTitle);
+
+    if (sort && order) {
+      return response.sort((a, b) => {
+        if (order === 'asc') {
+          return a[sort] > b[sort] ? 1 : -1;
+        }
+
+        return a[sort] < b[sort] ? 1 : -1;
+      });
+    }
+
+    return response;
   }
 
-  async findByActor(actor: string) {
+  async findByActor(actor: string, sort?: string, order?: string) {
     const replacedActor = actor.replace(/%20/g, ' ');
 
-    return this.reviewRepository.findByActor(replacedActor);
+    const response = await this.reviewRepository.findByActor(replacedActor);
+
+    if (sort && order) {
+      return response.sort((a, b) => {
+        if (order === 'asc') {
+          return a[sort] > b[sort] ? 1 : -1;
+        }
+
+        return a[sort] < b[sort] ? 1 : -1;
+      });
+    }
+
+    return response;
   }
 
-  async findByDirector(director: string) {
+  async findByDirector(director: string, sort?: string, order?: string) {
     const replacedDirector = director.replace(/%20/g, ' ');
 
-    return this.reviewRepository.findByDirector(replacedDirector);
+    const response =
+      await this.reviewRepository.findByDirector(replacedDirector);
+
+    if (sort && order) {
+      return response.sort((a, b) => {
+        if (order === 'asc') {
+          return a[sort] > b[sort] ? 1 : -1;
+        }
+
+        return a[sort] < b[sort] ? 1 : -1;
+      });
+    }
+
+    return response;
   }
 
   async create(data: CreateReviewDto) {
